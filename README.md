@@ -57,4 +57,7 @@ Things that I want to do:
 * ~~Export/Import WebSession out of the module so that you can reuse the session across powershell windows (reduce MFA prompting)~~ (via: [b6b1bb](https://github.com/Szeraax/ConnectWiser/commit/b6b1bb05c531a26e01b9991028b48aaeb4d0a089))
 * Complete help docs so that Invoke-Build doesn't yell
 * Merge CWCServerConnection and CwOption into 1 single object
-* Change all noun prefixes from `CWC` to `Cw`
+* Test new features a bit more in v0.x.x (draft module)
+* Release v1.x.x (stable/production)
+* Deprecate all noun prefixes with `CWC` (moving to `Cw` instead via v2.x.x breaking change)
+* Deprecate the use of -Credentials parameter (via v2.x.x breaking change)
