@@ -1,6 +1,6 @@
 ---
-external help file: ConnectWiseControlAPI-help.xml
-Module Name: ConnectWiseControlAPI
+external help file: ConnectWiser-help.xml
+Module Name: ConnectWiser
 online version:
 schema: 2.0.0
 ---
@@ -23,7 +23,7 @@ Initializes the connection parameters used by other commands in the module.
 
 ### Example 1
 ```powershell
-PS C:\> Connect-CWC -Server 'control.christaylor.codes' -Credentials $Credentials -Force
+PS C:\> Connect-CWC -Server 'contoso.screenconnect.com' -Credentials $Credentials -Force
 ```
 
 Sets connection information used by the module and overwrites any previously set information.

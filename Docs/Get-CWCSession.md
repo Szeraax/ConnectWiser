@@ -1,6 +1,6 @@
 ---
-external help file: ConnectWiseControlAPI-help.xml
-Module Name: ConnectWiseControlAPI
+external help file: ConnectWiser-help.xml
+Module Name: ConnectWiser
 online version:
 schema: 2.0.0
 ---

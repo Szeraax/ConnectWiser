@@ -21,7 +21,7 @@ $GroupName = 'All Machines'
 [Switch]$WhatIf = $true
 
 # Load module
-Import-Module 'ConnectWiseControlAPI'
+Import-Module ConnectWiser
 
 # Save connection info
 Connect-CWC -Server $Server -Credentials $Credentials
@@ -29,15 +29,14 @@ Connect-CWC -Server $Server -Credentials $Credentials
 # Search for multiple sessions for the same machine, and collect all but the last connected one
 $RedundantSessionColl = Get-CWCSession -Type Access -Group $GroupNameAll |
 Group-Object -Property Name |
-Where-Object -Property Count -gt 1 |
+Where-Object -Property Count -GT 1 |
 ForEach-Object {
     $_.Group | Sort-Object -Property LastConnectedEventTime |
     Select-Object -Skip 1
 }
 
 # Remove Redundant Sessions
-$RemovedSessionColl = foreach ($RedundantSession in $RedundantSessionColl)
-{
+$RemovedSessionColl = foreach ($RedundantSession in $RedundantSessionColl) {
     $RemoveCWCSessionProps = @{
         GUID    = $RedundantSession.SessionID
         Group   = $GroupName

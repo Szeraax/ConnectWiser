@@ -5,8 +5,8 @@ $Server = 'control.domain.com'
 $Credentials = Get-Credential
 
 # Load module
-Install-Module 'ConnectWiseControlAPI'
-Import-Module 'ConnectWiseControlAPI'
+Install-Module ConnectWiser
+Import-Module ConnectWiser
 
 # Save connection info
 Connect-CWC -Server $Server -Credentials $Credentials
@@ -14,11 +14,11 @@ Connect-CWC -Server $Server -Credentials $Credentials
 # Generate a new MFA token
 $MFA = New-CWCMFA
 $NewUser = @{
-    UserName = $DomainUser.Email
-    Password = $MFA.OTP
-    Email = $DomainUser.Email
-    DisplayName = $DomainUser.AccountName
-    OTP = $MFA.OTP
+    UserName       = $DomainUser.Email
+    Password       = $MFA.OTP
+    Email          = $DomainUser.Email
+    DisplayName    = $DomainUser.AccountName
+    OTP            = $MFA.OTP
     SecurityGroups = 'Remote Workforce'
 }
 New-CWCUser @NewUser -Verbose

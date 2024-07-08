@@ -5,8 +5,8 @@ $Server = 'control.domain.com'
 $Credentials = Get-Credential
 
 # Load module
-Install-Module 'ConnectWiseControlAPI'
-Import-Module 'ConnectWiseControlAPI'
+Install-Module ConnectWiser
+Import-Module ConnectWiser
 
 # Save connection info
 Connect-CWC -Server $Server -Credentials $Credentials
@@ -14,7 +14,7 @@ Connect-CWC -Server $Server -Credentials $Credentials
 # Find this machine in Control
 $Computer = Get-CWCSession -Type Access -Search $env:COMPUTERNAME -Limit 1
 
-if(!$Computer){ return "Computer not found" }
+if (!$Computer) { return "Computer not found" }
 
 # We now have some basic information about this session
 $Computer

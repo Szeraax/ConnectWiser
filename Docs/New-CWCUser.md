@@ -1,6 +1,6 @@
 ---
-external help file: ConnectWiseControlAPI-help.xml
-Module Name: ConnectWiseControlAPI
+external help file: ConnectWiser-help.xml
+Module Name: ConnectWiser
 online version:
 schema: 2.0.0
 ---
@@ -27,7 +27,7 @@ Creates a new local user.
 $NewUserParams = @{
     Credentials = $PSCredentials
     OTP = $(New-CWCMFA).OTP
-    DisplayName = 'Chris Taylor'
+    DisplayName = 'John Doe'
     Email = 'dont@bug.me'
     SecurityGroups = 'MySecurityGroup'
     ForcePassChange = $true

@@ -172,7 +172,7 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Connect-CWC -Server 'control.christaylor.codes' -Credentials $Credentials -Force</dev:code>
+        <dev:code>PS C:\&gt; Connect-CWC -Server 'contoso.screenconnect.com' -Credentials $Credentials -Force</dev:code>
         <dev:remarks>
           <maml:para>Sets connection information used by the module and overwrites any previously set information.</maml:para>
         </dev:remarks>
@@ -1736,7 +1736,7 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; New-CWCRemoteWorkforceAssignment -GUID $GUID -Username 'CTaylor' -DisplayName 'Chris Taylor'</dev:code>
+        <dev:code>PS C:\&gt; New-CWCRemoteWorkforceAssignment -GUID $GUID -Username 'MyUser' -DisplayName 'My Name'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -1966,7 +1966,7 @@
         <dev:code>$NewUserParams = @{
     Credentials = $PSCredentials
     OTP = $(New-CWCMFA).OTP
-    DisplayName = 'Chris Taylor'
+    DisplayName = 'John Doe'
     Email = 'dont@bug.me'
     SecurityGroups = 'MySecurityGroup'
     ForcePassChange = $true

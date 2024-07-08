@@ -1,16 +1,16 @@
 ---
-Module Name: ConnectWiseControlAPI
-Module Guid: f94fa996-0f01-4c5c-9cd9-3227728ebacb
-Download Help Link: https://github.com/christaylorcodes/ConnectWiseControlAPI/blob/master/ConnectWiseControlAPI_Functions.md
+Module Name: ConnectWiser
+Module Guid: d81b770d-e972-4dcf-bb3a-52b614c52184
+Download Help Link: https://github.com/Szeraax/ConnectWiser/blob/master/ConnectWiseControlAPI_Functions.md
 Help Version: 0.1.2.0
 Locale: en-US
 ---
 
-# ConnectWiseControlAPI Module
+# ConnectWiser Module
 ## Description
 This module wraps the web API into PowerShell functions.
 
-## ConnectWiseControlAPI Cmdlets
+## ConnectWiser Cmdlets
 ### [Add-CWCRemoteWorkforceRequiredRole](Docs/Add-CWCRemoteWorkforceRequiredRole.md)
 Create a new Remote Workforce security role
 
@@ -73,4 +73,3 @@ Updates the name of a session.
 
 ### [Update-CWCUser](Docs/Update-CWCUser.md)
 Update properties of an internal user.
-

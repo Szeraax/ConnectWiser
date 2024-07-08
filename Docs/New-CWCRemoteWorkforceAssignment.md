@@ -1,6 +1,6 @@
 ---
-external help file: ConnectWiseControlAPI-help.xml
-Module Name: ConnectWiseControlAPI
+external help file: ConnectWiser-help.xml
+Module Name: ConnectWiser
 online version:
 schema: 2.0.0
 ---
@@ -24,7 +24,7 @@ Uses the remote workforce extension to assign a user to machines
 
 ### EXAMPLE 1
 ```powershell
-PS C:\> New-CWCRemoteWorkforceAssignment -GUID $GUID -Username 'CTaylor' -DisplayName 'Chris Taylor'
+PS C:\> New-CWCRemoteWorkforceAssignment -GUID $GUID -Username 'MyUser' -DisplayName 'My Name'
 ```
 
 ## PARAMETERS
