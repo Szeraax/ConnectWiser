@@ -55,6 +55,7 @@ function Connect-CWC {
         }
     } until ($response -eq 1)
 
+    $script:CwOption.WebSession = $session
     $script:CWCServerConnection = @{
         Server     = $Server
         WebSession = $session
