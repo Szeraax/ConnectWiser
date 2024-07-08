@@ -1,7 +1,7 @@
 ﻿function Remove-CWCUser {
     [CmdletBinding(SupportsShouldProcess)]
     param(
-        [Parameter(Mandatory=$True)]
+        [Parameter(Mandatory = $True)]
         [string]$User
     )
 
@@ -14,8 +14,8 @@
 
     $WebRequestArguments = @{
         Endpoint = $Endpoint
-        Body = $Body
-        Method = 'Post'
+        Body     = $Body
+        Method   = 'Post'
     }
     if ($PSCmdlet.ShouldProcess($WebRequestArguments.Body, "Remove-CWCUser")) {
         Invoke-CWCWebRequest -Arguments $WebRequestArguments

@@ -13,25 +13,25 @@ function Add-CWCRemoteWorkforceRequiredRole {
         @(),
         @(
             @{
-                "AccessControlType" = 0
-                "Name" = "ViewSessionGroup"
+                "AccessControlType"  = 0
+                "Name"               = "ViewSessionGroup"
                 "SessionGroupFilter" = 7
-                "SessionGroupPath" = $SessionGroups
-                "OwnershipFilter" = 0
+                "SessionGroupPath"   = $SessionGroups
+                "OwnershipFilter"    = 0
             },
             @{
-                "AccessControlType" = 0
-                "Name" = "JoinSession"
+                "AccessControlType"  = 0
+                "Name"               = "JoinSession"
                 "SessionGroupFilter" = 7
-                "SessionGroupPath" = $SessionGroups
-                "OwnershipFilter" = 0
+                "SessionGroupPath"   = $SessionGroups
+                "OwnershipFilter"    = 0
             },
             @{
-                "AccessControlType" = 0
-                "Name" = "HostSessionWithoutConsent"
+                "AccessControlType"  = 0
+                "Name"               = "HostSessionWithoutConsent"
                 "SessionGroupFilter" = 7
-                "SessionGroupPath" = $SessionGroups
-                "OwnershipFilter" = 0
+                "SessionGroupPath"   = $SessionGroups
+                "OwnershipFilter"    = 0
             }
         )
     )
@@ -39,8 +39,8 @@ function Add-CWCRemoteWorkforceRequiredRole {
 
     $WebRequestArguments = @{
         Endpoint = $Endpoint
-        Body = $Body
-        Method = 'Post'
+        Body     = $Body
+        Method   = 'Post'
     }
     Invoke-CWCWebRequest -Arguments $WebRequestArguments
 }

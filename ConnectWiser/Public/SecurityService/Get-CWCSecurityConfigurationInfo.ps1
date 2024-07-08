@@ -6,7 +6,7 @@ function Get-CWCSecurityConfigurationInfo {
 
     $WebRequestArguments = @{
         Endpoint = $Endpoint
-        Method = 'Post'
+        Method   = 'Post'
     }
     Invoke-CWCWebRequest -Arguments $WebRequestArguments
 }

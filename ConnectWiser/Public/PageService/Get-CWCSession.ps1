@@ -27,7 +27,7 @@ function Get-CWCSession {
                 'filter'                = $Search
                 'findSessionID'         = $FindSessionID
                 'sessionLimit'          = $Limit
-            }            
+            }
             ActionCenterInfo = @{}
         }
         0

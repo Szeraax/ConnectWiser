@@ -1,10 +1,10 @@
 function Invoke-CWCWake {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$True)]
+        [Parameter(Mandatory = $True)]
         [guid[]]$GUID,
-        [Parameter(Mandatory=$True)]
-        [ValidateSet('Support','Access')]
+        [Parameter(Mandatory = $True)]
+        [ValidateSet('Support', 'Access')]
         [string]$Type
     )
 
@@ -12,20 +12,20 @@ function Invoke-CWCWake {
 
     $SessionEventType = 43
 
-    switch($Type){
+    switch ($Type) {
         'Support' { $Group = 'All Sessions' }
         'Access' { $Group = 'All Machines' }
         default { return Write-Error "Unknown Type, $Type" }
     }
 
-    $Body = ConvertTo-Json @($Group,@($GUID),$SessionEventType,'')
+    $Body = ConvertTo-Json @($Group, @($GUID), $SessionEventType, '')
     Write-Verbose $Body
 
     # Issue command
     $WebRequestArguments = @{
         Endpoint = $Endpoint
-        Body = $Body
-        Method = 'Post'
+        Body     = $Body
+        Method   = 'Post'
     }
 
     Invoke-CWCWebRequest -Arguments $WebRequestArguments

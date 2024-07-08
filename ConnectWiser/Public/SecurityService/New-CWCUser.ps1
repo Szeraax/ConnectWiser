@@ -1,11 +1,11 @@
 ﻿function New-CWCUser {
     [CmdletBinding(SupportsShouldProcess)]
     param(
-        [Parameter(Mandatory=$True)]
+        [Parameter(Mandatory = $True)]
         [pscredential]$Credentials,
         [string]$OTP,
         [string]$DisplayName,
-        [Parameter(Mandatory=$True)]
+        [Parameter(Mandatory = $True)]
         [string]$Email,
         [string[]]$SecurityGroups = @(),
         [boolean]$ForcePassChange = $true
@@ -29,8 +29,8 @@
 
     $WebRequestArguments = @{
         Endpoint = $Endpoint
-        Body = $Body
-        Method = 'Post'
+        Body     = $Body
+        Method   = 'Post'
     }
     if ($PSCmdlet.ShouldProcess($WebRequestArguments.Body, "New-CWCUser")) {
         Invoke-CWCWebRequest -Arguments $WebRequestArguments

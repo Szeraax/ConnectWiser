@@ -1,5 +1,4 @@
-function Remove-CWCSession
-{
+function Remove-CWCSession {
   [CmdletBinding(SupportsShouldProcess)]
   param (
     [Parameter(Mandatory = $True)]
@@ -28,8 +27,7 @@ function Remove-CWCSession
     Body     = $Body
     Method   = 'Post'
   }
-  if ($PSCmdlet.ShouldProcess($WebRequestArguments.Body, 'Remove-CWCSession'))
-  {
+  if ($PSCmdlet.ShouldProcess($WebRequestArguments.Body, 'Remove-CWCSession')) {
     Invoke-CWCWebRequest -Arguments $WebRequestArguments
   }
 }

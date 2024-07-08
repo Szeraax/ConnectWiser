@@ -6,7 +6,7 @@ function Get-CWCSessionGroup {
 
   $WebRequestArguments = @{
     Endpoint = $Endpoint
-    Method = 'Get'
+    Method   = 'Get'
   }
 
   Invoke-CWCWebRequest -Arguments $WebRequestArguments

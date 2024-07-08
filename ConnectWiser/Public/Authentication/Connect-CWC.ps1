@@ -1,7 +1,7 @@
 function Connect-CWC {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]$Server,
         [Parameter(Mandatory = $True)]
         [pscredential]$Credentials,
@@ -13,17 +13,17 @@ function Connect-CWC {
         return
     }
 
-    $Server = $Server -replace("http.*:\/\/",'')
+    $Server = $Server -replace ("http.*:\/\/", '')
     $Headers = @{
         'content-type' = "application/json; charset=utf-8"
-        'origin' = "https://$Server"
+        'origin'       = "https://$Server"
     }
 
     $FrontPage = Invoke-WebRequest "https://$Server/Login" -Headers $Headers -UseBasicParsing -SessionVariable session
     $Regex = [Regex]'(?<=antiForgeryToken":")(.*)(?=","isUserAdministrator)'
     $Match = $Regex.Match($FrontPage.content)
-    if($Match.Success){ $Headers.'x-anti-forgery-token' = $Match.Value.ToString() }
-    else{ Write-Verbose 'Unable to find anti forgery token. Some commands may not work.' }
+    if ($Match.Success) { $Headers.'x-anti-forgery-token' = $Match.Value.ToString() }
+    else { Write-Verbose 'Unable to find anti forgery token. Some commands may not work.' }
 
     $trackingGuid = [guid]::NewGuid().ToString()
     $otp = $null
@@ -43,16 +43,16 @@ function Connect-CWC {
     # $FrontPage = Invoke-WebRequest -Uri $Headers.origin -Headers $Headers -UseBasicParsing
 
     $script:CWCServerConnection = @{
-        Server = $Server
+        Server     = $Server
         WebSession = $session
     }
     Write-Verbose ($script:CWCServerConnection | Out-String)
 
-    try{
+    try {
         $null = Get-CWCSessionGroup -ErrorAction Stop
         Write-Verbose '$CWCServerConnection, variable initialized.'
     }
-    catch{
+    catch {
         Remove-Variable CWCServerConnection -Scope script
         Write-Verbose 'Authentication failed.'
         Write-Error $_
