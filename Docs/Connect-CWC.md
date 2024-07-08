@@ -60,6 +60,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DisableSessionTrust
+Used to make it so that the OTP code will be required for each new session
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Server
 The URL to your control server.
 

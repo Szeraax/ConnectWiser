@@ -5,7 +5,8 @@ function Connect-CWC {
         [string]$Server,
         [Parameter(Mandatory = $True)]
         [pscredential]$Credentials,
-        [switch]$Force
+        [switch]$Force,
+        [switch]$DisableSessionTrust
     )
 
     if ($script:CWCServerConnection -and !$Force) {
@@ -33,14 +34,19 @@ function Connect-CWC {
     if ($Match.Success) { $Headers.'x-anti-forgery-token' = $Match.Value.ToString() }
     else { Write-Verbose 'Unable to find anti forgery token. Some commands may not work.' }
 
-    $trackingGuid = [guid]::NewGuid().ToString()
     $otp = $null
+    # Each login session has to keep its own consistent nonce between retries so that the server can keep them straight.
+    # Remove this GUID and OTP will never work.
+    $trackingGuid = [guid]::NewGuid().ToString()
+    # Setting a sane default: Everyone loves to have fewer MFA prompts.
+    if ($DisableSessionTrust) { $sessionTrust = $false }
+    else { $sessionTrust = $true }
     do {
         $response = Invoke-RestMethod "https://$Server/Services/AuthenticationService.ashx/TryLogin" -WebSession $session -Body (@(
                 $Credentials.UserName
                 $Credentials.GetNetworkCredential().Password
                 $otp
-                $null
+                $sessionTrust
                 $trackingGuid
             ) | ConvertTo-Json) -ContentType application/json -Method Post
         Write-Verbose "Response from server '$response'"
@@ -48,7 +54,6 @@ function Connect-CWC {
             $otp = Read-Host -Prompt "Please enter your OTP code"
         }
     } until ($response -eq 1)
-    # $FrontPage = Invoke-WebRequest -Uri $Headers.origin -Headers $Headers -UseBasicParsing
 
     $script:CWCServerConnection = @{
         Server     = $Server
