@@ -15,12 +15,12 @@
     $Endpoint = 'Services/SecurityService.ashx/SaveUser'
 
     $Security = Get-CWCSecurityConfigurationInfo -ErrorAction Stop
-    $Internal = $Security.UserSources | Where-Object { $_.ResourceKey -eq $script:InternalUserSource }
+    $Internal = $Security.UserSources | Where-Object { $_.ResourceKey -eq $script:CwOption.InternalUserSource }
     $User = $Internal.Users | Where-Object { $_.Name -eq $UserToUpdate }
     if (!$User) { return Write-Error "Unable to find user $UserToUpdate" }
 
     $Update = @(
-        $script:InternalUserSource,
+        $script:CwOption.InternalUserSource,
         $UserToUpdate,
         $User.Name,
         $null,

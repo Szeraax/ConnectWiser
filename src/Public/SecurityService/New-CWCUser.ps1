@@ -14,7 +14,7 @@
     $Endpoint = 'Services/SecurityService.ashx/SaveUser'
 
     $Body = ConvertTo-Json @(
-        $script:InternalUserSource,
+        $script:CwOption.InternalUserSource,
         $null,
         $Credentials.UserName,
         $Credentials.GetNetworkCredential().Password,

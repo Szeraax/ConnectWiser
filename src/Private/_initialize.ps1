@@ -1,1 +1,4 @@
-$script:InternalUserSource = 'InternalMembershipProvider'
+$script:CwOption = @{
+    InternalUserSource = 'InternalMembershipProvider'
+    WebSession         = $null
+}

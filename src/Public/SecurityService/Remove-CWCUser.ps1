@@ -8,7 +8,7 @@
     $Endpoint = 'Services/SecurityService.ashx/DeleteUser'
 
     $Body = ConvertTo-Json @(
-        $script:InternalUserSource,
+        $script:CwOption.InternalUserSource,
         $User
     )
 
