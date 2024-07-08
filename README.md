@@ -36,6 +36,15 @@ Install-Module ConnectWiser
 ## Requirements
 * Requires your Control server to use https.
 
+## Quickstart
+You can begin using ConnectWiser in less than 2 minutes without any hacks that make you question your security mind:
+
+```posh
+Install-Module ConnectWiser
+Connect-CWC -Server contoso.screenconnect.com -Credentials (Get-Credential)
+Get-CWCSession -Type Access -Limit 1
+```
+
 ## Contributing
 To contribute or build the module yourself, clone the repo and run Invoke-Build. Then look at the repo issues, roadmap, or PRs to figure out how you can help.
 
@@ -47,3 +56,5 @@ Things that I want to do:
 * ~~Make Connect-CWC reuse WebSession~~ (via: [4e3bb0](https://github.com/Szeraax/ConnectWiser/commit/4e3bb078bc9caf75faaf20eed159abe841e5d703))
 * ~~Export/Import WebSession out of the module so that you can reuse the session across powershell windows (reduce MFA prompting)~~ (via: [b6b1bb](https://github.com/Szeraax/ConnectWiser/commit/b6b1bb05c531a26e01b9991028b48aaeb4d0a089))
 * Complete help docs so that Invoke-Build doesn't yell
+* Merge CWCServerConnection and CwOption into 1 single object
+* Change all noun prefixes from `CWC` to `Cw`
