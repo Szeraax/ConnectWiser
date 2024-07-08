@@ -3,8 +3,7 @@ function Connect-CWC {
     param(
         [Parameter(Mandatory = $true)]
         [string]$Server,
-        [Parameter(Mandatory = $True)]
-        [pscredential]$Credentials,
+        [pscredential]$Credential = (Get-Credential),
         [switch]$Force,
         [switch]$DisableSessionTrust,
         [string]$OtpCode = $null
@@ -43,8 +42,8 @@ function Connect-CWC {
     else { $sessionTrust = $true }
     do {
         $response = Invoke-RestMethod "https://$Server/Services/AuthenticationService.ashx/TryLogin" -WebSession $session -Body (@(
-                $Credentials.UserName
-                $Credentials.GetNetworkCredential().Password
+                $Credential.UserName
+                $Credential.GetNetworkCredential().Password
                 $OtpCode
                 $sessionTrust
                 $trackingGuid

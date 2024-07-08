@@ -82,9 +82,9 @@
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
-          <maml:name>Credentials</maml:name>
+          <maml:name>Credential</maml:name>
           <maml:description>
-            <maml:para>Credentials used to authenticate with the control server.</maml:para>
+            <maml:para>Credential used to authenticate with the control server.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
           <dev:type>
@@ -108,9 +108,9 @@
     </command:syntax>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
-        <maml:name>Credentials</maml:name>
+        <maml:name>Credential</maml:name>
         <maml:description>
-          <maml:para>Credentials used to authenticate with the control server.</maml:para>
+          <maml:para>Credential used to authenticate with the control server.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
         <dev:type>
@@ -172,7 +172,7 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Connect-CWC -Server 'contoso.screenconnect.com' -Credentials $Credentials -Force</dev:code>
+        <dev:code>PS C:\&gt; Connect-CWC -Server 'contoso.screenconnect.com' -Credential $Credential -Force</dev:code>
         <dev:remarks>
           <maml:para>Sets connection information used by the module and overwrites any previously set information.</maml:para>
         </dev:remarks>
@@ -1842,7 +1842,7 @@
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Credentials</maml:name>
+          <maml:name>Credential</maml:name>
           <maml:description>
             <maml:para>PSCredential object for the new user you want to create.</maml:para>
           </maml:description>
@@ -1941,7 +1941,7 @@
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>Credentials</maml:name>
+        <maml:name>Credential</maml:name>
         <maml:description>
           <maml:para>PSCredential object for the new user you want to create.</maml:para>
         </maml:description>
@@ -1964,7 +1964,7 @@
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
         <dev:code>$NewUserParams = @{
-    Credentials = $PSCredentials
+    Credential = $PSCredential
     OTP = $(New-CWCMFA).OTP
     DisplayName = 'John Doe'
     Email = 'dont@bug.me'

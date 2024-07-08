@@ -13,7 +13,7 @@ Creates a user.
 ## SYNTAX
 
 ```
-New-CWCUser -Credentials <PSCredential> [-OTP <String>] [-DisplayName <String>] -Email <String>
+New-CWCUser -Credential <PSCredential> [-OTP <String>] [-DisplayName <String>] -Email <String>
  [-SecurityGroups <String[]>] [-ForcePassChange <Boolean>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -25,7 +25,7 @@ Creates a new local user.
 ### EXAMPLE 1
 ```powershell
 $NewUserParams = @{
-    Credentials = $PSCredentials
+    Credential = $PSCredential
     OTP = $(New-CWCMFA).OTP
     DisplayName = 'John Doe'
     Email = 'dont@bug.me'
@@ -142,7 +142,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Credentials
+### -Credential
 PSCredential object for the new user you want to create.
 
 ```yaml

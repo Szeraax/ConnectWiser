@@ -8,8 +8,8 @@
 # Your Control server URL
 $Server = 'control.domain.com'
 
-# Get Control credentials
-$Credentials = Get-Credential
+# Get Control credential
+$Credential = Get-Credential
 
 # Set GroupName to Search in
 $GroupName = 'All Machines'
@@ -24,7 +24,7 @@ $GroupName = 'All Machines'
 Import-Module ConnectWiser
 
 # Save connection info
-Connect-CWC -Server $Server -Credentials $Credentials
+Connect-CWC -Server $Server -Credential $Credential
 
 # Search for multiple sessions for the same machine, and collect all but the last connected one
 $RedundantSessionColl = Get-CWCSession -Type Access -Group $GroupNameAll |

@@ -13,7 +13,7 @@ Initializes the connection parameters for the module.
 ## SYNTAX
 
 ```
-Connect-CWC [-Server] <String> [-Credentials] <PSCredential> [-Force] [<CommonParameters>]
+Connect-CWC [-Server] <String> [-Credential] <PSCredential> [-Force] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -23,15 +23,15 @@ Initializes the connection parameters used by other commands in the module.
 
 ### Example 1
 ```powershell
-PS C:\> Connect-CWC -Server 'contoso.screenconnect.com' -Credentials $Credentials -Force
+PS C:\> Connect-CWC -Server 'contoso.screenconnect.com' -Credential $Credential -Force
 ```
 
 Sets connection information used by the module and overwrites any previously set information.
 
 ## PARAMETERS
 
-### -Credentials
-Credentials used to authenticate with the control server.
+### -Credential
+A credential used to authenticate with the control server.
 
 ```yaml
 Type: PSCredential

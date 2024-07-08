@@ -1,15 +1,15 @@
 # Your Control server URL
 $Server = 'control.domain.com'
 
-# Get Control credentials
-$Credentials = Get-Credential
+# Get Control credential
+$Credential = Get-Credential
 
 # Load module
 Install-Module ConnectWiser
 Import-Module ConnectWiser
 
 # Save connection info
-Connect-CWC -Server $Server -Credentials $Credentials
+Connect-CWC -Server $Server -Credential $Credential
 
 # Generate a new MFA token
 $MFA = New-CWCMFA

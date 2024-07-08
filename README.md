@@ -41,7 +41,7 @@ You can begin using ConnectWiser in less than 2 minutes without any hacks that m
 
 ```posh
 Install-Module ConnectWiser
-Connect-CWC -Server contoso.screenconnect.com -Credentials (Get-Credential)
+Connect-CWC -Server contoso.screenconnect.com -Credential (Get-Credential)
 Get-CWCSession -Type Access -Limit 1
 ```
 

@@ -2,7 +2,7 @@
     [CmdletBinding(SupportsShouldProcess)]
     param(
         [Parameter(Mandatory = $True)]
-        [pscredential]$Credentials,
+        [pscredential]$Credential,
         [string]$OTP,
         [string]$DisplayName,
         [Parameter(Mandatory = $True)]
@@ -16,9 +16,9 @@
     $Body = ConvertTo-Json @(
         $script:CwOption.InternalUserSource,
         $null,
-        $Credentials.UserName,
-        $Credentials.GetNetworkCredential().Password,
-        $Credentials.GetNetworkCredential().Password,
+        $Credential.UserName,
+        $Credential.GetNetworkCredential().Password,
+        $Credential.GetNetworkCredential().Password,
         $OTP,
         $DisplayName,
         '',
