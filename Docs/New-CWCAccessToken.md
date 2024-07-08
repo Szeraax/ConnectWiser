@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -Group
-{{ Fill Group Description }}
+Name of session group to use.
 
 ```yaml
 Type: String[]

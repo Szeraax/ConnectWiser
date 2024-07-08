@@ -32,7 +32,7 @@ Get the audit logs for Computer1 for the last day.
 ## PARAMETERS
 
 ### -EndDate
-{{ Fill EndDate Description }}
+The latest date to include in the audit log results.
 
 ```yaml
 Type: DateTime
@@ -47,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -EventTypes
-{{ Fill EventTypes Description }}
+A list of the event types to include in the audit log results. If none, ?defaults to all?
 
 ```yaml
 Type: Int32[]
@@ -62,7 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -IncludeSessionCaptures
-{{ Fill IncludeSessionCaptures Description }}
+Switch to also include session captures in audit log results
 
 ```yaml
 Type: SwitchParameter
@@ -107,7 +107,7 @@ Accept wildcard characters: False
 ```
 
 ### -StartDate
-{{ Fill StartDate Description }}
+The earliest date to include in the audit log results.
 
 ```yaml
 Type: DateTime
