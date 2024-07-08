@@ -37,3 +37,12 @@ Install-Module ConnectWiser
 ## Requirements
 
 * Requires your Control server to use https.
+
+## Roadmap
+
+Things that I want to do:
+
+* Allow OTP at invocation (remove the need for interactive prompt)
+* Support "Trust this device for 7 days" feature
+* Make Connect-CWC reuse WebSession
+* Export/Import WebSession out of the module so that you can reuse the session across powershell windows (reduce MFA prompting)
