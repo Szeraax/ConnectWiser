@@ -70,6 +70,18 @@
       <command:syntaxItem>
         <maml:name>Connect-CWC</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+          <maml:name>OtpCode</maml:name>
+          <maml:description>
+            <maml:para>When you already know what your OtpCode will be prior to login (auth token, yubikey, etc.), you can make it part of invocation rather than an interactive element</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
           <maml:name>Server</maml:name>
           <maml:description>
             <maml:para>The URL to your control server.</maml:para>
@@ -153,6 +165,18 @@
           <maml:uri />
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>OtpCode</maml:name>
+        <maml:description>
+          <maml:para>When you already know what your OtpCode will be prior to login (auth token, yubikey, etc.), you can make it part of invocation rather than an interactive element</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
         <maml:name>Server</maml:name>

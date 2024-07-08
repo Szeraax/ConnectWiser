@@ -12,7 +12,7 @@
     RootModule        = 'ConnectWiser.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.2407.23'
+    ModuleVersion     = '0.2407.24'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()

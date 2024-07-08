@@ -75,6 +75,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -OtpCode
+When you already know what your OtpCode will be prior to login (auth token, yubikey, etc.), you can make it part of invocation rather than an interactive element
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Server
 The URL to your control server.
 
