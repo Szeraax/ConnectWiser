@@ -19,7 +19,15 @@ function Connect-CWC {
         'origin'       = "https://$Server"
     }
 
-    $FrontPage = Invoke-WebRequest "https://$Server/Login" -Headers $Headers -UseBasicParsing -SessionVariable session
+    $frontPage_param = @{
+        Uri             = "https://$Server/Login"
+        Headers         = $Headers
+        UseBasicParsing = $true
+    }
+    if ($script:CWCServerConnection.WebSession) { $frontPage_param.WebSession = $script:CWCServerConnection.WebSession }
+    else { $frontPage_param.SessionVariable = "session" }
+    $FrontPage = Invoke-WebRequest @frontPage_param
+
     $Regex = [Regex]'(?<=antiForgeryToken":")(.*)(?=","isUserAdministrator)'
     $Match = $Regex.Match($FrontPage.content)
     if ($Match.Success) { $Headers.'x-anti-forgery-token' = $Match.Value.ToString() }
