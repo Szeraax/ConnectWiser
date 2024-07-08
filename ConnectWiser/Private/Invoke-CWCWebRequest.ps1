@@ -17,8 +17,8 @@
     $BaseURI = "https://$($script:CWCServerConnection.Server)"
     $Arguments.URI = Join-Url $BaseURI $Arguments.Endpoint
     $Arguments.remove('Endpoint')
-    $Arguments.Headers = $script:CWCServerConnection.Headers
     $Arguments.UseBasicParsing = $true
+    $Arguments.WebSession = $script:CWCServerConnection.WebSession
     Write-Debug "Arguments: $($Arguments | ConvertTo-Json)"
 
     # Issue request
@@ -85,9 +85,6 @@
         return Write-Error "Max retries hit. Status: $($Result.StatusCode) $($Result.StatusDescription)"
     }
 
-    if ($script:CWCServerConnection -and $script:CWCServerConnection.Headers) {
-        $script:CWCServerConnection.Headers.'Set-Cookie' = $Result.Headers['Set-Cookie']
-    }
 
     if ($Arguments.OutFile) {
         return $Result

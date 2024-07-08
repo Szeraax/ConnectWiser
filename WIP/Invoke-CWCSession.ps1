@@ -14,6 +14,7 @@
 
     $Endpoint = 'Bin/i.t.Connect.ClientSetup.exe'
 
+    # TODO: Because the Headers have been removed from the module, k =... is now broken.
     $Splat = @{
         h = $script:CWCServerConnection.Server
         p = 80
