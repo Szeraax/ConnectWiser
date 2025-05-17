@@ -2,14 +2,13 @@
 #Requires -modules Pester
 #Requires -modules platyPS
 #Requires -modules posh-git
-#Requires -modules Assert
 #Requires -modules PSScriptAnalyzer
 #Requires -modules Configuration
 
 [CmdletBinding()]
 param(
     # How to increment
-    [ValidateSet("Major", "MajorReset", "Minor", "MinorReset", "Build", "Reset")]
+    [ValidateSet("Major", "MajorReset", "Build", "Reset")]
     [string]$Increment = "Build"
 )
 
@@ -90,12 +89,13 @@ Add-BuildTask Build Init, Test, Analyze, {
 
     # I like this method of versions compared to Update-Metadata's style for major versions.
     [version]$V = $PsdData['ModuleVersion']
+    $date = (Get-Date).ToString('yyMM')
     switch ($Increment) {
-        "Major" { $V = [version]::new(($V.Major + 1), [datetime]::now.ToString('yyMM'), ($V.Build + 1)) }
-        "MajorReset" { $V = [version]::new(($v.Major + 1), [datetime]::now.ToString('yyMM'), 0) }
-        "Build" { $V = [version]::new($v.Major, [datetime]::now.ToString('yyMM'), ($V.Build + 1)) }
+        "Major" { $V = [version]::new(($V.Major + 1), $date, $V.Build) }
+        "MajorReset" { $V = [version]::new(($v.Major + 1), $date, 0) }
+        "Build" { $V = [version]::new($v.Major, $date, ($V.Build + 1)) }
 
-        "Reset" { $V = [version]::new(0, [datetime]::now.ToString('yyMM'), 1) }
+        "Reset" { $V = [version]::new(0, $date, 1) }
     }
     Update-Metadata -Path $PsdPath -PropertyName ModuleVersion -Value $V.ToString()
 
