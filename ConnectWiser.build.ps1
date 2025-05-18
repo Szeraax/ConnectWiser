@@ -18,7 +18,7 @@ $Script:PsdPath = "$PSScriptRoot\$ModuleName\$ModuleName.psd1"
 
 function Clear-Workspace {
     "docs", "en-US" | ForEach-Object {
-        if (Test-Path $PSScriptRoot\$_) { Remove-Item $PSScriptRoot\$_ -Recurse }
+        if (Test-Path $PSScriptRoot\$PSItem) { Remove-Item $PSScriptRoot\$PSItem -Recurse }
     }
 }
 
@@ -58,33 +58,37 @@ Add-BuildTask Init { Clear-Workspace }, {
     $Script:PsdData = Import-Metadata $PsdPath
 }
 
-Add-BuildTask Test Init, {
-    # Currently unused - Need to look at pester v5 and add it back in.
-    # $CoverageFolder = Get-ChildItem "src\" | Where-Object Name -In "Public", "Private" |
-    # Sort-Object -Descending FullName |
-    # ForEach-Object {
-    #     $_.FullName + "\*.ps1"
-    # }
+Add-BuildTask Test Init, Build, {
+    # We want to exit anytime there are test failures
+    # Invoke-Pester -Configuration @{Run = @{Exit = $true } }
+    pwsh -noprofile -command '$name=(ls *.build.ps1).name -replace ".build.ps1";Import-Module .\$name\$name.psd1;invoke-pester -Configuration @{Run = @{Exit = $true } }'
+    if ($LASTEXITCODE -ne 0) { throw }
+    if ([version]$Script:PsdData.PowerShellVersion -lt "6.0") {
+        powershell -noprofile -command '$name=(ls *.build.ps1).name -replace ".build.ps1";Import-Module .\$name\$name.psd1;invoke-pester -Configuration @{Run = @{Exit = $true } }'
+        if ($LASTEXITCODE -ne 0) { throw }
+    }
+    # Nvm! We still
+    # Invoke-Pester
 }
 
 Add-BuildTask Analyze {
     Invoke-ScriptAnalyzer -Path $PSScriptRoot\src\*\*.ps1 -IncludeDefaultRules -Fix
 }
 
-Add-BuildTask Build Init, Test, Analyze, {
-    $ModuleFiles = "Public", "Private" | ForEach-Object { Get-ChildItem $PSScriptRoot\src\$_\ -Recurse -File -ea silent }
+Add-BuildTask Build Init, {
+    $ModuleFiles = "Public", "Private" | ForEach-Object { Get-ChildItem $PSScriptRoot\src\$PSItem\ -Recurse -File -ea silent }
     $PowerShellFiles, $OtherFiles = $ModuleFiles.Where( { $_.Extension -eq ".ps1" }, "Split")
 
     Get-ChildItem $PSScriptRoot\$ModuleName\* -Recurse |
     Where-Object Name -NE "$ModuleName.psd1" |
-    Remove-Item -ErrorAction SilentlyContinue -Recurse
+    Remove-Item -ErrorAction SilentlyContinue
 
     $PowerShellFiles | ForEach-Object {
-        Get-Content $_.FullName |
+        Get-Content $PSItem.FullName |
         Out-File $PsmPath -Append -Encoding utf8
     }
     $OtherFiles | ForEach-Object {
-        Copy-Item $_.FullName $PSScriptRoot\$ModuleName\
+        Copy-Item $PSItem.FullName $PSScriptRoot\$ModuleName\
     }
 
     # I like this method of versions compared to Update-Metadata's style for major versions.
@@ -103,9 +107,10 @@ Add-BuildTask Build Init, Test, Analyze, {
     if (Compare-Object $FunctionsToExport $PsdData['FunctionsToExport'] -SyncWindow 0) {
         Update-Metadata -Path $PsdPath -PropertyName FunctionsToExport -Value $FunctionsToExport
     }
+    Import-Module $PsmPath -Force
 }
 
-Add-BuildTask Validate-Documentation Build, {
+Add-BuildTask Validate-Documentation Build, Test, Analyze, {
     # Undocumented commands and parameters will result in a line with the following text on their line:
     # {{ Fill InputObject Description}} or similar
     # Check docs folder and see if any files contain {{. Fail if so.
@@ -113,9 +118,9 @@ Add-BuildTask Validate-Documentation Build, {
     if ($PsdData.FunctionsToExport) {
         New-MarkdownHelp -Command $PsdData.FunctionsToExport -OutputFolder $PSScriptRoot\docs -Force | Out-Null
         Get-ChildItem $PSScriptRoot\Docs\* | ForEach-Object {
-            Get-Content $_.FullName |
+            Get-Content $PSItem.FullName |
             Select-String "{{ Fill|{{ Add Example" -Context 10, 0 | Select-Object -First 1 | ForEach-Object {
-                #Throw "Help not complete. Missing required documentation begins on line $($_.ReadCount)"
+                #Throw "Help not complete. Missing required documentation begins on line $($PSItem.ReadCount)"
                 Write-Warning "Help not complete. Missing required documentation near section:"
                 $_.Context.PreContext | Select-String "^#" | ForEach-Object { Write-Warning $_ }
             }
@@ -128,10 +133,10 @@ Add-BuildTask Validate-Documentation Build, {
 Add-BuildTask Publish Init, {
     if (-not [string]::IsNullOrWhiteSpace($ENV:PSGALLERY_API_KEY)) {
         $Splat = @{
-            ApiKey = $ENV:PSGALLERY_API_KEY
-            Path   = "$PSScriptRoot\$ModuleName\"
+            NuGetApiKey = $ENV:PSGALLERY_API_KEY
+            Path        = "$PSScriptRoot\$ModuleName\"
         }
-        Publish-PSResource @Splat
+        Publish-Module @Splat
     }
     else {
         throw "API was not found"
@@ -143,36 +148,9 @@ Add-BuildTask Template {
     # Not currently.
 }
 
-#region Module customization
-# Anything that needs edited in the build process for this SPECIFIC module
-# Should be placed bere
-function Clear-Workspace {
-    "AutoGenDocs", "en-US" | ForEach-Object {
-        if (Test-Path $PSScriptRoot\$_) { Remove-Item $PSScriptRoot\$_ -Recurse }
-    }
+$customization = "$PSScriptRoot\$Script:ModuleName.customization.ps1"
+if (Test-Path $customization) {
+    . $customization
 }
-
-Add-BuildTask Validate-Documentation Build, {
-    # Undocumented commands and parameters will result in a line with the following text on their line:
-    # {{ Fill InputObject Description}} or similar
-    # Check docs folder and see if any files contain {{. Fail if so.
-    New-ExternalHelp -Path .\Docs\ -OutputPath .\ConnectWiser\en-US\ -Force
-    Import-Module $PsmPath -Force
-    if ($PsdData.FunctionsToExport) {
-        New-MarkdownHelp -Command $PsdData.FunctionsToExport -OutputFolder $PSScriptRoot\AutogenDocs -Force | Out-Null
-        Get-ChildItem $PSScriptRoot\AutogenDocs\* | ForEach-Object {
-            Get-Content $_.FullName |
-            Select-String "{{ Fill|{{ Add Example" -Context 10, 0 | Select-Object -First 1 | ForEach-Object {
-                #Throw "Help not complete. Missing required documentation begins on line $($_.ReadCount)"
-                Write-Warning "Help not complete. Missing required documentation near section:"
-                $_.Context.PreContext | Select-String "^#" | ForEach-Object { Write-Warning $_ }
-            }
-        }
-    }
-    #Don't know why I need external help. But, I have an XML file I could use if this were binary I guess?
-    # New-ExternalHelp $PSScriptRoot\docs -OutputPath en-US\ -Force | Out-Null
-}, { Clear-Workspace }
-#endRegion Module customization
-
 # Synopsis: Build and validate.
 Add-BuildTask . Validate-Documentation
